@@ -1,0 +1,197 @@
+CS3733: Assignment 4 Dining Philosophers by Supakjeera Thanapaisal
+
+Compile: 
+    gcc file.c -o file.o -pthread
+Run: 
+    ./file.o numThreads
+Run 100 times: 
+    for i in {1...100}; do  ./file.o numThreads; done
+Make sure Order is correct for part 3: 
+    ./file.o numThreads | grep "eating"
+
+Section: Part I
+
+    Assignment 4: # of threads = 5
+    This is philosopher 1
+    This is philosopher 2
+    This is philosopher 3
+    This is philosopher 4
+    This is philosopher 5
+    5 threads have been completed/joined successfully!
+
+    pthread_join()
+    - All the threads were waited until the end before exiting using a loop. check out createPhilosophers(int nthreads);
+
+Section: Part II
+    Assignment 4: # of threads = 5
+    This is philosopher 1
+    Philosopher #1 start thinking
+    This is philosopher 2
+    Philosopher #2 start thinking
+    This is philosopher 3
+    Philosopher #3 start thinking
+    This is philosopher 4
+    Philosopher #4 start thinking
+    This is philosopher 0
+    Philosopher #0 start thinking
+    Philosopher #1 end thinking
+    Philo #1 pick up left chopstick: (index 2)
+    Philo #1 pick up  right chopstick: (index 1)
+    Philosopher #4 end thinking
+    Philo #4 pick up left chopstick: (index 0)
+    Philo #4 pick up  right chopstick: (index 4)
+    Philosopher #4 start eating
+    Philosopher #3 end thinking
+    Philo #3 pick up left chopstick: (index 4)
+    Philosopher #1 start eating
+    Philosopher #2 end thinking
+    Philo #2 pick up left chopstick: (index 3)
+    Philo #2 pick up  right chopstick: (index 2)
+    Philosopher #0 end thinking
+    Philo #0 pick up left chopstick: (index 1)
+    Philosopher #4 end eating
+    Philo #4 put down left chopstick: (index 0)
+    Philo #4 put down right chopstick: (index 4)
+    Philo #3 pick up  right chopstick: (index 3)
+    Philosopher #1 end eating
+    Philo #1 put down left chopstick: (index 2)
+    Philosopher #2 start eating
+    Philo #1 put down right chopstick: (index 1)
+    Philo #0 pick up  right chopstick: (index 0)
+    Philosopher #0 start eating
+    Philosopher #0 end eating
+    Philo #0 put down left chopstick: (index 1)
+    Philo #0 put down right chopstick: (index 0)
+    Philosopher #2 end eating
+    Philo #2 put down left chopstick: (index 3)
+    Philosopher #3 start eating
+    Philo #2 put down right chopstick: (index 2)
+    Philosopher #3 end eating
+    Philo #3 put down left chopstick: (index 4)
+    Philo #3 put down right chopstick: (index 3)
+    5 threads have been completed/joined successfully!
+
+
+    Num of deadlocks: 1 forgot the check error when call mutex_lock
+
+Section: Part III
+
+    Assignment 4: # of threads = 5
+    This is philosopher 2
+    Philosopher #2 start thinking
+    This is philosopher 0
+    Philosopher #0 start thinking
+    This is philosopher 1
+    Philosopher #1 start thinking
+    This is philosopher 4
+    Philosopher #4 start thinking
+    This is philosopher 3
+    Philosopher #3 start thinking
+    Philosopher #0 end thinking
+    Philosopher #2 end thinking
+    Philo #2 trying: 
+    Philosopher #1 end thinking
+    Philo #1 trying: 
+    Philo #0 trying: 
+    Philo #0 pick up left chopstick: (index 1)
+    Philo #0 pick up  right chopstick: (index 0)
+    Philosopher #0 start eating
+    Philosopher #4 end thinking
+    Philo #4 trying: 
+    Philosopher #3 end thinking
+    Philo #3 trying: 
+    Philosopher #0 end eating
+    Philo #0 put down left chopstick: (index 1)
+    Philo #0 put down right chopstick: (index 0)
+    Philo #1 pick up left chopstick: (index 2)
+    Philo #1 pick up  right chopstick: (index 1)
+    Philosopher #1 start eating
+    Philosopher #1 end eating
+    Philo #1 put down left chopstick: (index 2)
+    Philo #1 put down right chopstick: (index 1)
+    Philo #2 pick up left chopstick: (index 3)
+    Philo #2 pick up  right chopstick: (index 2)
+    Philosopher #2 start eating
+    Philosopher #2 end eating
+    Philo #2 put down left chopstick: (index 3)
+    Philo #2 put down right chopstick: (index 2)
+    Philo #3 pick up left chopstick: (index 4)
+    Philo #3 pick up  right chopstick: (index 3)
+    Philosopher #3 start eating
+    Philosopher #3 end eating
+    Philo #3 put down left chopstick: (index 4)
+    Philo #3 put down right chopstick: (index 3)
+    Philo #4 pick up left chopstick: (index 0)
+    Philo #4 pick up  right chopstick: (index 4)
+    Philosopher #4 start eating
+    Philosopher #4 end eating
+    Philo #4 put down left chopstick: (index 0)
+    Philo #4 put down right chopstick: (index 4)
+    5 threads have been completed/joined successfully!
+
+    Number of deadlocks: 1 forgot to unlock the first thread.
+    
+    Conditional Variables: 
+    Every threads will have a chance to try to lock then check if it's their turn, if not cond func will be invoke and they will sleep + unlock.
+    If it's their turn, they will eat, unlock, then increment the turn, then wake everyone up using Broadcast()
+
+Section: Part IV
+
+    Assignment 4: # of threads = 5
+    This is philosopher 0
+    Philosopher #0 start thinking
+    This is philosopher 1
+    Philosopher #1 start thinking
+    This is philosopher 2
+    Philosopher #2 start thinking
+    This is philosopher 3
+    Philosopher #3 start thinking
+    This is philosopher 4
+    Philosopher #4 start thinking
+    Philosopher #2 end thinking
+    Philo #2 pick up left chopstick: (index 3)
+    Philo #2 pick up  right chopstick: (index 2)
+    Philosopher #2 start eating
+    Philosopher #1 end thinking
+    Philosopher #0 end thinking
+    Philo #0 pick up left chopstick: (index 1)
+    Philo #0 pick up  right chopstick: (index 0)
+    Philosopher #4 end thinking
+    Philosopher #0 start eating
+    Philosopher #3 end thinking
+    Philosopher #2 end eating
+    Philo #2 put down left chopstick: (index 3)
+    Philo #2 put down right chopstick: (index 2)
+    Philo #3 pick up left chopstick: (index 4)
+    Philo #3 pick up  right chopstick: (index 3)
+    Philosopher #3 start eating
+    Philosopher #3 end eating
+    Philo #3 put down left chopstick: (index 4)
+    Philo #3 put down right chopstick: (index 3)
+    Philosopher #0 end eating
+    Philo #0 put down left chopstick: (index 1)
+    Philo #0 put down right chopstick: (index 0)
+    Philo #4 pick up left chopstick: (index 0)
+    Philo #4 pick up  right chopstick: (index 4)
+    Philosopher #4 start eating
+    Philo #1 pick up left chopstick: (index 2)
+    Philo #1 pick up  right chopstick: (index 1)
+    Philosopher #1 start eating
+    Philosopher #4 end eating
+    Philo #4 put down left chopstick: (index 0)
+    Philo #4 put down right chopstick: (index 4)
+    Philosopher #1 end eating
+    Philo #1 put down left chopstick: (index 2)
+    Philo #1 put down right chopstick: (index 1)
+    5 threads have been completed/joined successfully!
+
+
+    Solution: used trylock() and see if possible if not the give up the lock, let the other get it, then keep checking. while if if else
+
+
+Report.txt:
+1. No one. Just the professor, his video, MIT link, google
+2. I think so? No deadlocks
+3. What was not working was I didn't include -pthread and I'm on a window manchine. 
+I had to download Linux env and use VS code as IDE. I have encounter some deadlocks when I forget to check error when call mutex_lock.
+Also more deadlocks because I forgot the unlock lol (part 3). 
