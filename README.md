@@ -1,12 +1,12 @@
 # DiningPhilosophers
 
-# Compile: 
+### Compile: 
     gcc file.c -o file.o -pthread
-# Run: 
+### Run: 
     ./file.o numThreads
-# Run 100 times: 
+### Run 100 times: 
     for i in {1...100}; do  ./file.o numThreads; done
-# Make sure Order is correct for part 3: 
+### Make sure Order is correct for part 3: 
     ./file.o numThreads | grep "eating"
 
 # Part 1:
